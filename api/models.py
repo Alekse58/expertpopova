@@ -55,6 +55,16 @@ class Slide(models.Model):
         verbose_name_plural = 'Слайды'
 
 
+class Card(models.Model):
+    slide = models.ForeignKey(Slide, related_name='cards_blocks', on_delete=models.CASCADE)
+    text = models.TextField(null=True, max_length=450)
+    description = models.TextField(null=True, max_length=450, blank=True)
+    image = models.ImageField(upload_to='media/images', null=True)
+
+    class Meta:
+        verbose_name_plural = 'Карточки'
+
+
 class TextBlock(models.Model):
     slide = models.ForeignKey(Slide, related_name='text_blocks', on_delete=models.CASCADE)
     text = models.TextField(null=True, max_length=450)

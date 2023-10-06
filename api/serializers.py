@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.response import Response
 
-from .models import Slide, TextBlock, Photo, Contact, Header, Footer
+from .models import Slide, TextBlock, Photo, Contact, Header, Footer, Card
 
 
 class TextBlockSerializer(serializers.ModelSerializer):
@@ -16,9 +16,17 @@ class PhotoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Card
+        fields = '__all__'
+
+
 class SlideSerializer(serializers.ModelSerializer):
-    text_blocks = TextBlockSerializer(many=True, read_only=True)
-    photos = PhotoSerializer(many=True, read_only=True)
+    cards_blocks = CardSerializer(many=True, read_only=True, required=False)
+
+    text_blocks = TextBlockSerializer(many=True, read_only=True, required=False)
+    photos = PhotoSerializer(many=True, read_only=True, required=False)
 
     class Meta:
         model = Slide
@@ -65,4 +73,3 @@ class LayoutDataSerializer(serializers.Serializer):
                 'company_description': footer.company_description,
                 'icons': icons_data,
             }
-

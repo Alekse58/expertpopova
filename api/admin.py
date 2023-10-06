@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Slide, TextBlock, Photo, Contact, Header, Footer, SiteIcon
+from .models import Slide, TextBlock, Photo, Contact, Header, Footer, SiteIcon, Card
 
 
 # @admin.register(Slide)
@@ -9,6 +9,11 @@ from .models import Slide, TextBlock, Photo, Contact, Header, Footer, SiteIcon
 
 class TextBlockInline(admin.TabularInline):
     model = TextBlock
+    extra = 1  # Количество пустых форм для добавления текстовых блоков
+
+
+class CardBlockInline(admin.TabularInline):
+    model = Card
     extra = 1  # Количество пустых форм для добавления текстовых блоков
 
 
@@ -22,7 +27,7 @@ class SlideAdmin(admin.ModelAdmin):
     list_display = ('title', 'sub_title', 'slide_order')
     list_filter = ('slide_order',)
     search_fields = ('title', 'sub_title')
-    inlines = [TextBlockInline, PhotoInline]
+    inlines = [TextBlockInline, PhotoInline, CardBlockInline]
 
 
 @admin.register(Contact)
